@@ -1,0 +1,7 @@
+model_list:
+  - model_name: qwen3-14b
+    litellm_params:
+      model: lm_studio/qwen3-14b
+      api_base: os.environ/LM_STUDIO_API_BASE
+      api_key: os.environ/LM_STUDIO_API_KEY
+      api_version: os.environ/LM_STUDIO_API_VERSION
