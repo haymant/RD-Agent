@@ -5,3 +5,13 @@ model_list:
       api_base: os.environ/LM_STUDIO_API_BASE
       api_key: os.environ/LM_STUDIO_API_KEY
       api_version: os.environ/LM_STUDIO_API_VERSION
+      input_cost_per_token: 0.00
+      output_cost_per_token: 0.00
+  - model_name: text-embedding-nomic-embed-text-v1.5
+    litellm_params:
+      model: lm_studio/text-embedding-nomic-embed-text-v1.5
+      api_base: os.environ/LM_STUDIO_API_BASE
+      api_key: os.environ/LM_STUDIO_API_KEY
+      api_version: os.environ/LM_STUDIO_API_VERSION      
+      input_cost_per_token: 0.00
+      output_cost_per_token: 0.00
