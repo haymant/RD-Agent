@@ -16,7 +16,7 @@ import subprocess
 from importlib.resources import path as rpath
 
 import fire
-
+import litellm
 from rdagent.app.data_mining.model import main as med_model
 from rdagent.app.data_science.loop import main as kaggle
 from rdagent.app.general_model.general_model import (
@@ -45,6 +45,21 @@ def ui(port=19899, log_dir="", debug=False):
 
 
 def app():
+    litellm.register_model(
+    model_cost={ "qwen-turbo":{
+        "max_tokens": 527680,
+        "max_input_tokens": 227680,
+        "max_output_tokens": 0,
+        "input_cost_per_token": 0.0,
+        "output_cost_per_token": 0.0,
+        "supports_function_calling": True,
+        "supports_prompt_caching": True,
+        "supports_system_messages": True,
+        "supports_response_schema": True,
+        "supports_tool_choice": True,
+        "mode": "moderation"
+    }
+    })    
     fire.Fire(
         {
             "fin_factor": fin_factor,

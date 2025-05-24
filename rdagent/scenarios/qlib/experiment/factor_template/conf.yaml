@@ -1,9 +1,9 @@
 qlib_init:
-    provider_uri: "~/.qlib/qlib_data/cn_data"
-    region: cn
+    provider_uri: "~/.qlib/qlib_data/us_data"
+    region: us
 
-market: &market csi300
-benchmark: &benchmark SH000300
+market: &market sp500
+benchmark: &benchmark ^GSPC
 
 data_handler_config: &data_handler_config
     start_time: 2008-01-01

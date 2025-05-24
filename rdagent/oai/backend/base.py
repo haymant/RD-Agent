@@ -432,8 +432,11 @@ class APIBackend(ABC):
                     try:
                         json.loads(all_response)
                     except:
-                        match = re.search(r"```json(.*)```", all_response, re.DOTALL)
-                        all_response = match.groups()[0] if match else all_response
+                        # Find all JSON code blocks and merge them
+                        json_blocks = re.findall(r"```json\s*(.*?)\s*```", all_response, re.DOTALL)
+                        if json_blocks:
+                            # Join all found JSON blocks
+                            all_response = json_blocks[0]
                         json.loads(all_response)
                 if json_target_type is not None:
                     TypeAdapter(json_target_type).validate_json(all_response)

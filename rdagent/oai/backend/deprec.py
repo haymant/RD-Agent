@@ -182,7 +182,7 @@ class DeprecBackend(APIBackend):
 
             self.chat_model = LLM_SETTINGS.chat_model
             self.chat_model_map = LLM_SETTINGS.chat_model_map
-            self.encoder = self._get_encoder()
+            self.encoder = 'o200k_base' if self.chat_model.startswith('qwen') else self._get_encoder() 
             self.chat_openai_base_url = LLM_SETTINGS.chat_openai_base_url
             self.embedding_openai_base_url = LLM_SETTINGS.embedding_openai_base_url
             self.chat_api_base = LLM_SETTINGS.chat_azure_api_base
@@ -455,6 +455,14 @@ class DeprecBackend(APIBackend):
         return resp, finish_reason
 
     def _calculate_token_from_messages(self, messages: list[dict[str, Any]]) -> int:
+        if self.chat_model.startswith("qwen") or self.chat_model.startswith("qwen2"):
+            # Qwen2 models use a different tokenization method
+            if self.encoder is None:
+                raise ValueError("Encoder is not initialized.")
+            num_tokens = 0
+            for message in messages:
+                num_tokens += len(message["content"]) + 4  # 4 tokens for each message
+            return num_tokens
         if self.chat_use_azure_deepseek:
             return 0
         if self.encoder is None:

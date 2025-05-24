@@ -414,7 +414,7 @@ class DockerConf(EnvConf):
     default_entry: str  # the entry point of the image
 
     extra_volumes: dict = {}
-    extra_volume_mode: str = "ro"  # by default. only the mount_path should be writable, others are changed to read-only
+    extra_volume_mode: str = "rw"  # by default. only the mount_path should be writable, others are changed to read-only
     # Sometime, we need maintain some extra data for the workspace.
     # And the extra data may be shared and the downloading can be time consuming.
     # So we just want to download it once.
@@ -739,9 +739,9 @@ class QTDockerEnv(DockerEnv):
         """
         super().prepare()
         qlib_data_path = next(iter(self.conf.extra_volumes.keys()))
-        if not (Path(qlib_data_path) / "qlib_data" / "cn_data").exists():
+        if not (Path(qlib_data_path) / "qlib_data" / "us_data").exists():
             logger.info("We are downloading!")
-            cmd = "python -m qlib.run.get_data qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn --interval 1d --delete_old False"
+            cmd = "python -m qlib.run.get_data qlib_data --target_dir ~/.qlib/qlib_data/us_data --region us --interval 1d --delete_old False"
             self.run(entry=cmd)
         else:
             logger.info("Data already exists. Download skipped.")
